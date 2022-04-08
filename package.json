@@ -1,8 +1,16 @@
 {
   "name": "quiz_frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "author": "Reinier Millo Sánchez <reinier.millo88@gmail.com>",
+  "license": "MIT",
   "dependencies": {
+    "@emotion/cache": "^11.7.1",
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@mui/icons-material": "^5.6.0",
+    "@mui/material": "^5.6.0",
+    "@mui/styled-engine": "^5.6.0",
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -15,7 +23,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^7.2.8",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.0",
     "typescript": "~4.1.5"
   },
   "scripts": {
@@ -26,6 +34,13 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "bugs": {
+    "url": "https://github.com/reinier-millo/quiz-sample-frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reinier-millo/quiz-sample-frontend.git"
   },
   "browserslist": {
     "production": [
@@ -38,5 +53,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "prettier": "^2.6.2"
   }
 }
