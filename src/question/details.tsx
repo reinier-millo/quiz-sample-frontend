@@ -41,7 +41,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function QuestionDetails() {
-  let { id } = useParams();
+  const { id } = useParams();
 
   const [objId, setObjId] = useState<string>('');
   const [optId, setOptId] = useState<string>('');
@@ -615,7 +615,6 @@ export default function QuestionDetails() {
                   <Alert severity="error">{invalidUpdateText}</Alert>
                 </Collapse>
                 <TextField
-                  autoFocus
                   margin="normal"
                   id="question"
                   name="question"
@@ -659,7 +658,6 @@ export default function QuestionDetails() {
                     {questionOptions?.map((obj: any, idx: number) => (
                       <Box key={obj}>
                         <TextField
-                          autoFocus
                           margin="normal"
                           id={obj}
                           name={obj}
@@ -668,12 +666,14 @@ export default function QuestionDetails() {
                           required
                         />
                         {idx >= 2 ? (
-                          <small
+                          <Typography
+                            variant="caption"
+                            component="small"
                             className="remove-action float-right"
                             onClick={deleteOptQuestion(idx)}
                           >
                             Eliminar
-                          </small>
+                          </Typography>
                         ) : (
                           ''
                         )}
@@ -744,7 +744,6 @@ export default function QuestionDetails() {
                   <Alert severity="error">{invalidUpdateText}</Alert>
                 </Collapse>
                 <TextField
-                  autoFocus
                   margin="normal"
                   id="optValue"
                   name="optValue"

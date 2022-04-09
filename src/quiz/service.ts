@@ -52,8 +52,6 @@ export interface IQuizDetail {
 class Quiz {
   private static _instance: Quiz;
 
-  private constructor() {}
-
   public static get shared(): Quiz {
     if (!Quiz._instance) {
       Quiz._instance = new Quiz();

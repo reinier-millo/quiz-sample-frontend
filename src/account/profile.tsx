@@ -56,7 +56,7 @@ export default function Profile() {
         dispatch(
           addNotification({
             type: 'success',
-            message: `Perfil de usuario actualizado!`,
+            message: 'Perfil de usuario actualizado!',
           })
         );
       })
@@ -123,7 +123,6 @@ export default function Profile() {
               label="Nombre(s) y apellido(s)"
               helperText={nameErrorText}
               error={nameError}
-              autoFocus
               value={auth.name}
             />
             <TextField

@@ -168,7 +168,6 @@ export default function Register() {
                 label="Nombre(s) y apellido(s)"
                 helperText={nameErrorText}
                 error={nameError}
-                autoFocus
               />
               <TextField
                 margin="normal"

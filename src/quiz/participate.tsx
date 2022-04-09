@@ -28,7 +28,7 @@ import WarningIcon from '@mui/icons-material/Help';
 import InfoIcon from '@mui/icons-material/Info';
 
 export default function QuizParticipate() {
-  let { id } = useParams();
+  const { id } = useParams();
 
   const [quiz, setQuiz] = useState<any>(null);
 
@@ -52,11 +52,13 @@ export default function QuizParticipate() {
         );
         navigate('/');
       });
-    return () => {};
+    return () => {
+      /* Do nothing on destroy */
+    };
   }, []);
 
   const handleEvaluation = (idQuestion: any) => {
-    return (evt: any) => {
+    return () => {
       const htmlObj: any = document.getElementById(`question-${idQuestion}`);
 
       const data = new FormData(htmlObj);
@@ -67,7 +69,7 @@ export default function QuizParticipate() {
         dispatch(
           addNotification({
             type: 'error',
-            message: `Pregunta no válida, por favor intente de nuevo!`,
+            message: 'Pregunta no válida, por favor intente de nuevo!',
           })
         );
         navigate('/');
@@ -82,7 +84,8 @@ export default function QuizParticipate() {
           dispatch(
             addNotification({
               type: 'error',
-              message: `Debe seleccionar una respuesta válida para poder enviar la respuesta!`,
+              message:
+                'Debe seleccionar una respuesta válida para poder enviar la respuesta!',
             })
           );
           return;
@@ -90,7 +93,7 @@ export default function QuizParticipate() {
         options.push(option);
       } else {
         options = question[0].options
-          .map((value: any) => (!!data.get(`${value.id}`) ? value.id : null))
+          .map((value: any) => (data.get(`${value.id}`) ? value.id : null))
           .filter((value: any) => value !== null);
       }
 
@@ -101,30 +104,32 @@ export default function QuizParticipate() {
             dispatch(
               addNotification({
                 type: 'success',
-                message: `FELICITACIONES!!! Has acertado con tu respuesta!`,
+                message: 'FELICITACIONES!!! Has acertado con tu respuesta!',
               })
             );
           } else if (value?.success === 0) {
             dispatch(
               addNotification({
                 type: 'error',
-                message: `Lo sentimos, no acertaste esta vez, continúa itentándolo!`,
+                message:
+                  'Lo sentimos, no acertaste esta vez, continúa itentándolo!',
               })
             );
           } else {
             dispatch(
               addNotification({
                 type: 'warning',
-                message: `No está tan mal, pero tienes que continuar mejorando!`,
+                message:
+                  'No está tan mal, pero tienes que continuar mejorando!',
               })
             );
           }
         })
-        .catch((err) => {
+        .catch(() => {
           dispatch(
             addNotification({
               type: 'error',
-              message: `Se produjo un error al registrar su participación!`,
+              message: 'Se produjo un error al registrar su participación!',
             })
           );
         });
@@ -249,12 +254,12 @@ export default function QuizParticipate() {
                                 !quizState.responses[obj.id]?.status
                                   ? ''
                                   : quizState.responses[
-                                      obj.id
-                                    ]?.options?.filter(
-                                      (value: any) => value.id === subobj.id
-                                    )[0]?.valid === true
-                                  ? 'success'
-                                  : 'error'
+                                    obj.id
+                                  ]?.options?.filter(
+                                    (value: any) => value.id === subobj.id
+                                  )[0]?.valid === true
+                                    ? 'success'
+                                    : 'error'
                               }
                               control={
                                 !quizState.responses[obj.id]?.status ? (

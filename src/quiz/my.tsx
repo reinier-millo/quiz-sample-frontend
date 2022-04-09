@@ -323,7 +323,6 @@ export default function MyQuizes() {
                   <Alert severity="error">{invalidUpdateText}</Alert>
                 </Collapse>
                 <TextField
-                  autoFocus
                   margin="normal"
                   id="quizName"
                   name="quizName"

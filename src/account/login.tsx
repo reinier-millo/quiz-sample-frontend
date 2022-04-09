@@ -137,7 +137,6 @@ export default function Login() {
                 autoComplete="email"
                 helperText={emailErrorText}
                 error={emailError}
-                autoFocus
               />
               <TextField
                 margin="normal"

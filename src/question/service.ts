@@ -29,8 +29,6 @@ export interface IQuestion {
 class Question {
   private static _instance: Question;
 
-  private constructor() {}
-
   public static get shared(): Question {
     if (!Question._instance) {
       Question._instance = new Question();

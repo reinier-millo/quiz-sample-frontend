@@ -5,8 +5,6 @@ import { store } from '../app/store';
 class Account {
   private static _instance: Account;
 
-  private constructor() {}
-
   public static get shared(): Account {
     if (!Account._instance) {
       Account._instance = new Account();

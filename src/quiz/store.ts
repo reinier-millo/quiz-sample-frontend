@@ -44,7 +44,7 @@ export const quizSlice = createSlice({
       state.quizes = [];
     },
     registerResponse: (state, action: PayloadAction<IQuizEvaluation>) => {
-      let status: string = '';
+      let status = '';
       if (action.payload?.fail === 0) {
         status = 'success';
       } else if (action.payload?.success === 0) {
