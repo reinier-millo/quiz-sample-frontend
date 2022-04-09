@@ -1,39 +1,68 @@
-.App {
+.header-link,
+.header-link:hover,
+.header-link:active {
+  color: white !important;
+  text-decoration: none !important;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 6px 8px;
+}
+
+.link-primary,
+.link-primary:hover,
+.link-primary:active {
+  color: #1976d2 !important;
+  text-decoration: none !important;
+}
+
+.text-center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.plus-btn {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+.valid-response {
+  color: green !important;
+  font-weight: 700;
+}
+.invalid-response {
+  color: red !important;
 }
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.remove-action,
+.remove-action:hover,
+.remove-action:active {
+  color: red !important;
+  text-decoration: none !important;
+  cursor: pointer;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.float-right {
+  float: right;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.bg-success {
+  background-color: green !important;
+}
+.bg-error {
+  background-color: red !important;
+}
+.bg-warning {
+  background-color: orange !important;
+}
+
+.success > .Mui-disabled {
+  color: green !important;
+}
+.error > .Mui-disabled {
+  color: red !important;
 }
