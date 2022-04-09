@@ -1,57 +1,58 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Login from './account/login';
+import Register from './account/register';
+import AllQuizes from './quiz/all';
+import { useAppSelector } from './app/hooks';
+import LayoutPage from './components/layout';
+import Profile from './account/profile';
+import MyQuizes from './quiz/my';
+import QuestionDetails from './question/details';
+import QuizParticipate from './quiz/participate';
 
 function App() {
+  const auth = useAppSelector((state) => state.auth);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Routes>
+      <Route
+        path="/account/login"
+        element={auth.isLogged ? <Navigate to="/" /> : <Login />}
+      />
+      <Route
+        path="/account/register"
+        element={auth.isLogged ? <Navigate to="/" /> : <Register />}
+      />
+
+      <Route element={<LayoutPage />}>
+        <Route path="/" element={<AllQuizes />} />
+        <Route
+          path="/profile"
+          element={
+            !auth.isLogged ? <Navigate to="/account/login" /> : <Profile />
+          }
+        />
+        <Route
+          path="/my-quiz"
+          element={
+            !auth.isLogged ? <Navigate to="/account/login" /> : <MyQuizes />
+          }
+        />
+        <Route
+          path="/my-quiz/:id"
+          element={
+            !auth.isLogged ? (
+              <Navigate to="/account/login" />
+            ) : (
+              <QuestionDetails />
+            )
+          }
+        />
+        <Route path="/quiz/:id" element={<QuizParticipate />} />
+      </Route>
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
