@@ -81,7 +81,11 @@ export default function MyQuizes() {
     };
   };
 
-  const handleCloseDelete = () => {
+  const handleCloseDelete = (_evt: any, reason?: any) => {
+    if (reason === 'backdropClick') {
+      return;
+    }
+
     setObjId('');
     setOpenDelete(false);
   };
@@ -89,17 +93,21 @@ export default function MyQuizes() {
   const handleConfirmDelete = () => {
     QuizService.delete(objId)
       .then(() => {
-        addNotification({
-          type: 'success',
-          message: 'Quiz eliminado',
-        });
+        dispatch(
+          addNotification({
+            type: 'success',
+            message: 'Quiz eliminado',
+          })
+        );
         QuizService.fetchMyQuiz();
       })
       .catch(() => {
-        addNotification({
-          type: 'error',
-          message: 'Se produjo un error inesperado al eliminar el quiz',
-        });
+        dispatch(
+          addNotification({
+            type: 'error',
+            message: 'Se produjo un error inesperado al eliminar el quiz',
+          })
+        );
       })
       .finally(() => {
         setObjId('');
@@ -107,7 +115,11 @@ export default function MyQuizes() {
       });
   };
 
-  const handleClose = () => {
+  const handleClose = (_evt: any, reason?: any) => {
+    if (reason === 'backdropClick') {
+      return;
+    }
+
     setOpenEditor(false);
   };
 
@@ -136,10 +148,12 @@ export default function MyQuizes() {
     if (isNew) {
       QuizService.create(quizName, data.get('quizDescription'))
         .then(() => {
-          addNotification({
-            type: 'success',
-            message: 'Nuevo quiz guardado',
-          });
+          dispatch(
+            addNotification({
+              type: 'success',
+              message: 'Nuevo quiz guardado',
+            })
+          );
           QuizService.fetchMyQuiz();
           setOpenEditor(false);
         })
@@ -153,10 +167,12 @@ export default function MyQuizes() {
     } else {
       QuizService.update(objId, quizName, data.get('quizDescription'))
         .then(() => {
-          addNotification({
-            type: 'success',
-            message: 'Información del quiz actualizada',
-          });
+          dispatch(
+            addNotification({
+              type: 'success',
+              message: 'Información del quiz actualizada',
+            })
+          );
           QuizService.fetchMyQuiz();
           setOpenEditor(false);
         })
