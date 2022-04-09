@@ -34,7 +34,7 @@ export default function AccountMenu() {
 
   const doLogout = () => {
     AccountService.logout().finally(() => {
-      goTo('/');
+      goTo('/')();
     });
   };
 
