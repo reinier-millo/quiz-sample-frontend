@@ -13,10 +13,10 @@ import Copyright from './components/copyright';
 import { AccountService } from './service';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { addNotification } from '../notifications/store';
 import { useAppDispatch } from '../app/hooks';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 const theme = createTheme();
 
@@ -151,17 +151,15 @@ export default function Login() {
                 helperText={passwordErrorText}
                 error={passwordError}
               />
-              <LoadingButton
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                loading={isLoading}
-                startIcon={<span />}
-                loadingPosition="start"
+                disabled={isLoading}
               >
                 Iniciar sesión
-              </LoadingButton>
+              </Button>
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>

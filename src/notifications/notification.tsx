@@ -24,21 +24,19 @@ export default function FloatNotifications() {
   });
 
   return (
-    <div>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        open={notification.isActive}
-        autoHideDuration={5000}
+    <Snackbar
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      open={notification.isActive}
+      autoHideDuration={5000}
+      onClose={handleClose}
+    >
+      <Alert
         onClose={handleClose}
+        severity={notification.type}
+        sx={{ width: '100%' }}
       >
-        <Alert
-          onClose={handleClose}
-          severity={notification.type}
-          sx={{ width: '100%' }}
-        >
-          {notification.message}
-        </Alert>
-      </Snackbar>
-    </div>
+        {notification.message}
+      </Alert>
+    </Snackbar>
   );
 }

@@ -15,7 +15,7 @@ import { AccountService } from './service';
 import { addNotification } from '../notifications/store';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Button from '@mui/material/Button';
 
 const theme = createTheme();
 
@@ -194,17 +194,15 @@ export default function Register() {
                 helperText={passwordErrorText}
                 error={passwordError}
               />
-              <LoadingButton
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                loading={isLoading}
-                startIcon={<span />}
-                loadingPosition="start"
+                disabled={isLoading}
               >
                 Registrar cuenta
-              </LoadingButton>
+              </Button>
               <Grid container>
                 <Grid item xs></Grid>
                 <Grid item>

@@ -7,6 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
@@ -39,7 +40,7 @@ export default function AccountMenu() {
   };
 
   return auth.isLogged ? (
-    <div>
+    <Box>
       <Tooltip title="Menú de usuario">
         <IconButton
           onClick={handleClick}
@@ -112,15 +113,15 @@ export default function AccountMenu() {
           Cerrar sesión
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   ) : (
-    <div>
+    <Box>
       <Link className="header-link" to="/account/login">
         Iniciar sesión
       </Link>
       <Link className="header-link" to="/account/register">
         Registrar
       </Link>
-    </div>
+    </Box>
   );
 }

@@ -11,8 +11,11 @@ import { AccountService } from './service';
 import { addNotification } from '../notifications/store';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import LoadingButton from '@mui/lab/LoadingButton';
+import Button from '@mui/material/Button';
 import Person from '@mui/icons-material/Person';
+import Chip from '@mui/material/Chip';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function Profile() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -86,6 +89,22 @@ export default function Profile() {
           <Typography component="h1" variant="h5">
             Perfil de usuario
           </Typography>
+          <Box>
+            <Chip
+              icon={<ThumbUpIcon />}
+              label={auth.success}
+              color="success"
+              sx={{ ml: 2, mt: 2 }}
+              title="Número de aciertos"
+            />
+            <Chip
+              icon={<ThumbDownIcon />}
+              label={auth.fail}
+              color="error"
+              sx={{ ml: 2, mt: 2 }}
+              title="Número de desaciertos"
+            />
+          </Box>
           <Box
             component="form"
             noValidate
@@ -127,17 +146,15 @@ export default function Profile() {
               defaultValue={auth.about}
             />
 
-            <LoadingButton
+            <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              loading={isLoading}
-              loadingPosition="start"
-              startIcon={''}
+              disabled={isLoading}
             >
               Actualizar perfil
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       </Grid>

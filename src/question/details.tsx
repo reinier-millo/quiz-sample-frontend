@@ -36,6 +36,9 @@ import Radio from '@mui/material/Radio';
 import FormLabel from '@mui/material/FormLabel';
 import Divider from '@mui/material/Divider';
 import { Link } from 'react-router-dom';
+import Chip from '@mui/material/Chip';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function QuestionDetails() {
   let { id } = useParams();
@@ -503,7 +506,23 @@ export default function QuestionDetails() {
                     <br />
                     {obj.type === 1 ? 'Selección simple' : 'Selección múltiple'}
                   </Typography>
-                  <div>
+                  <Box>
+                    <Chip
+                      icon={<ThumbUpIcon />}
+                      label={obj.success}
+                      color="success"
+                      sx={{ ml: 2, mt: 2 }}
+                      title="Número de aciertos"
+                    />
+                    <Chip
+                      icon={<ThumbDownIcon />}
+                      label={obj.fail}
+                      color="error"
+                      sx={{ ml: 2, mt: 2 }}
+                      title="Número de desaciertos"
+                    />
+                  </Box>
+                  <Box sx={{ mt: 2 }}>
                     <IconButton
                       edge="end"
                       color="primary"
@@ -522,7 +541,7 @@ export default function QuestionDetails() {
                     >
                       <DeleteIcon />
                     </IconButton>
-                  </div>
+                  </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                   <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
@@ -534,7 +553,7 @@ export default function QuestionDetails() {
                           subobj.valid ? 'valid-response' : 'invalid-response'
                         }
                         secondaryAction={
-                          <div>
+                          <Box>
                             <IconButton
                               edge="end"
                               color="primary"
@@ -553,7 +572,7 @@ export default function QuestionDetails() {
                             >
                               <DeleteIcon />
                             </IconButton>
-                          </div>
+                          </Box>
                         }
                       >
                         <ListItemText
@@ -576,11 +595,11 @@ export default function QuestionDetails() {
             className="plus-btn"
             color="primary"
             aria-label="add"
+            title="Agregar pregunta"
             onClick={addQuestion}
           >
             <AddIcon />
           </Fab>
-
           <Dialog open={openEditor} onClose={handleClose}>
             <Box
               component="form"
@@ -608,7 +627,7 @@ export default function QuestionDetails() {
                   defaultValue={editStrQuestion}
                 />
                 {isNew ? (
-                  <div>
+                  <Box>
                     <FormLabel id="question-type-label">
                       Tipo de pregunta
                     </FormLabel>
@@ -632,14 +651,13 @@ export default function QuestionDetails() {
                     <FormLabel id="question-answers-label">
                       Opciones de respuesta
                     </FormLabel>
-                    <div>
+                    <Box>
                       <small>
-                        Debe indicar un mínimo de dos opciones y un máximo de
-                        10.
+                        Debe indicar un mínimo de 2 opciones y un máximo de 10.
                       </small>
-                    </div>
+                    </Box>
                     {questionOptions?.map((obj: any, idx: number) => (
-                      <div key={obj}>
+                      <Box key={obj}>
                         <TextField
                           autoFocus
                           margin="normal"
@@ -659,24 +677,24 @@ export default function QuestionDetails() {
                         ) : (
                           ''
                         )}
-                      </div>
+                      </Box>
                     ))}
                     {questionOptions.length < 10 ? (
-                      <div>
+                      <Box>
                         <Button
                           disabled={isEditing}
                           onClick={addQuestionOptions}
                         >
                           Agregar opción
                         </Button>
-                      </div>
+                      </Box>
                     ) : (
                       ''
                     )}
                     <Collapse in={optionError} sx={{ mb: 2 }}>
                       <Alert severity="error">{optionErrorText}</Alert>
                     </Collapse>
-                  </div>
+                  </Box>
                 ) : (
                   ''
                 )}
