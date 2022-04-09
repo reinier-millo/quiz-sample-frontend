@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IQuiz } from './service';
+import { IQuiz, IQuizEvaluation } from './service';
 
 export interface QuizState {
   quizes: IQuiz[];
+  responses: any;
 }
 
 /* Quiz initial state */
 const initialState: QuizState = {
   quizes: [],
+  responses: {},
 };
 
 /* Declare the quiz redux store slice */
@@ -41,11 +43,42 @@ export const quizSlice = createSlice({
     clearQuiz: (state) => {
       state.quizes = [];
     },
+    registerResponse: (state, action: PayloadAction<IQuizEvaluation>) => {
+      let status: string = '';
+      if (action.payload?.fail === 0) {
+        status = 'success';
+      } else if (action.payload?.success === 0) {
+        status = 'error';
+      } else {
+        status = 'warning';
+      }
+
+      state.responses[action.payload.id] = {
+        options: action.payload.options.map((value: any) => {
+          return {
+            id: value.id,
+            valid: value.valid,
+          };
+        }),
+        response: action.payload.responses,
+        status: status,
+      };
+    },
+    clearResponses: (state) => {
+      state.responses = [];
+    },
   },
 });
 
 /* Export the available store actions */
-export const { loadQuizes, appendQuiz, updateQuiz, deleteQuiz, clearQuiz } =
-  quizSlice.actions;
+export const {
+  loadQuizes,
+  appendQuiz,
+  updateQuiz,
+  deleteQuiz,
+  clearQuiz,
+  registerResponse,
+  clearResponses,
+} = quizSlice.actions;
 
 export default quizSlice.reducer;

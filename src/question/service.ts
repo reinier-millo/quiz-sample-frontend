@@ -20,6 +20,8 @@ export interface IQuestion {
   id?: string;
   description: string;
   type?: number;
+  success?: number;
+  fail?: number;
   options?: IQuestionOption[];
   createdAt?: string;
 }
@@ -166,6 +168,8 @@ class Question {
                   id: value.id,
                   description: value.description,
                   type: value.type,
+                  success: value.sucess,
+                  fail: value.fail,
                   options: value.options,
                   createdAt: new Date(value.createdAt).toLocaleString(),
                 };

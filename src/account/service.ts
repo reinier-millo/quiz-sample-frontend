@@ -61,6 +61,8 @@ class Account {
               uid: response.data.uid,
               name: response.data.name,
               email: response.data.email,
+              success: response.data.success,
+              fail: response.data.fail,
             })
           );
 
@@ -121,6 +123,8 @@ class Account {
               name: response.data.name,
               email: response.data.email,
               about: response.data.about,
+              success: response.data.sucess,
+              fail: response.data.fail,
             })
           );
         })

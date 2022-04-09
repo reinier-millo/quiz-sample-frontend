@@ -6,6 +6,8 @@ export interface ILoginPayload {
   uid: string;
   name: string;
   email: string;
+  success?: number;
+  fail?: number;
   about?: string;
 }
 
@@ -21,11 +23,15 @@ export interface AuthState {
   name?: string;
   email?: string;
   about?: string;
+  success?: number;
+  fail?: number;
 }
 
 /* Auth initial state */
 const initialState: AuthState = {
   isLogged: false,
+  success: 0,
+  fail: 0,
 };
 
 /* Declare the auth redux store slice */
@@ -40,6 +46,8 @@ export const authSlice = createSlice({
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.about = action.payload.about;
+      state.success = action.payload.success;
+      state.fail = action.payload.fail;
     },
     updateProfile: (state, action: PayloadAction<IUpdatePayload>) => {
       state.name = action.payload.name;
@@ -51,6 +59,8 @@ export const authSlice = createSlice({
       state.uid = undefined;
       state.name = undefined;
       state.email = undefined;
+      state.success = 0;
+      state.fail = 0;
     },
   },
 });

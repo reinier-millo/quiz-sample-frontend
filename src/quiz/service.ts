@@ -1,12 +1,52 @@
 import axios, { AxiosResponse } from 'axios';
 import { store } from '../app/store';
-import { appendQuiz, deleteQuiz, loadQuizes, updateQuiz } from './store';
+import {
+  appendQuiz,
+  deleteQuiz,
+  loadQuizes,
+  registerResponse,
+  updateQuiz,
+} from './store';
+
+export interface IQuizEvaluation {
+  id: string;
+  quiz: string;
+  success?: number;
+  fail?: number;
+  options: IQuizDetailQuestionOptions[];
+  responses?: string[];
+}
 
 export interface IQuiz {
   id: string;
   name: string;
   description: string;
+  count?: number;
+  success?: number;
+  fail?: number;
   createdAt: string;
+}
+
+export interface IQuizDetailQuestionOptions {
+  id: string;
+  value: string;
+  valid?: boolean;
+}
+
+export interface IQuizDetailQuestion {
+  id: string;
+  description: string;
+  type: number;
+  success: number;
+  fail: number;
+  options: IQuizDetailQuestionOptions[];
+}
+
+export interface IQuizDetail {
+  id: string;
+  name: string;
+  description?: string;
+  questions: IQuizDetailQuestion[];
 }
 
 class Quiz {
@@ -51,6 +91,9 @@ class Quiz {
               id: response.data?.id,
               name: quizName,
               description: quizDescription,
+              count: 0,
+              success: 0,
+              fail: 0,
               createdAt: new Date().toLocaleString(),
             })
           );
@@ -147,6 +190,9 @@ class Quiz {
                   id: value.id,
                   name: value.name,
                   description: value.description,
+                  count: value.count,
+                  success: value.success,
+                  fail: value.fail,
                   createdAt: new Date(value.createdAt).toLocaleString(),
                 };
               })
@@ -175,12 +221,89 @@ class Quiz {
                   id: value.id,
                   name: value.name,
                   description: value.description,
+                  count: value.count,
+                  success: value.success,
+                  fail: value.fail,
                   createdAt: new Date(value.createdAt).toLocaleString(),
                 };
               })
             )
           );
           resolve();
+        })
+        .catch(reject);
+    });
+  }
+
+  /**
+   * Fetch all available quizes
+   *
+   * @returns
+   */
+  public fetchDetails(id: any): Promise<IQuizDetail> {
+    return new Promise<IQuizDetail>((resolve, reject) => {
+      axios
+        .get(`${process.env.REACT_APP_QUIZ_API}/v1/quiz/${id}`)
+        .then((response: AxiosResponse) => {
+          resolve({
+            id: response.data.id,
+            name: response.data.name,
+            description: response.data.description,
+            questions: response.data.questions.map((value: any) => {
+              return {
+                id: value.id,
+                description: value.description,
+                type: value.type,
+                success: value.success,
+                fail: value.fail,
+                options: value.options.map((opt: any) => {
+                  return {
+                    id: opt._id,
+                    value: opt.value,
+                  };
+                }),
+              };
+            }),
+          });
+        })
+        .catch(reject);
+    });
+  }
+
+  public participate(
+    quiz: any,
+    question: any,
+    responses: any
+  ): Promise<IQuizEvaluation> {
+    return new Promise<IQuizEvaluation>((resolve, reject) => {
+      const token: string | null = localStorage.getItem('token');
+
+      axios
+        .post(
+          `${process.env.REACT_APP_QUIZ_API}/v1/quiz/${quiz}/participate`,
+          {
+            question: question,
+            responses: responses,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response: AxiosResponse) => {
+          const evaluation = {
+            id: question,
+            quiz: quiz,
+            success: response.data.success,
+            fail: response.data.fail,
+            options: response.data.options,
+            responses: responses,
+          };
+
+          store.dispatch(registerResponse(evaluation));
+
+          resolve(evaluation);
         })
         .catch(reject);
     });

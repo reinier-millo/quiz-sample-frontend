@@ -13,10 +13,16 @@ import { QuizService } from './service';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { addNotification } from '../notifications/store';
 import { clearQuiz } from './store';
+import { useNavigate } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
+import Chip from '@mui/material/Chip';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function AllQuizes() {
   const dispatch = useAppDispatch();
   const quiz = useAppSelector((state) => state.quiz);
+  const navigate = useNavigate();
 
   useEffect(() => {
     /* Load all quizes of the current user */
@@ -32,6 +38,12 @@ export default function AllQuizes() {
       dispatch(clearQuiz());
     };
   }, []);
+
+  const participate = (id: any) => {
+    return () => {
+      navigate(`/quiz/${id}`);
+    };
+  };
 
   return (
     <Grid container component="main" justifyContent="center">
@@ -56,13 +68,43 @@ export default function AllQuizes() {
             )}
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
               {quiz.quizes.map((obj) => (
-                <ListItem key={obj.id} divider title={obj.description}>
+                <ListItem
+                  key={obj.id}
+                  divider
+                  title={obj.description}
+                  onClick={participate(obj.id)}
+                >
                   <ListItemAvatar>
-                    <Avatar>
-                      <Quiz />
-                    </Avatar>
+                    <Badge
+                      badgeContent={obj.count}
+                      title="Cantidad de preguntas"
+                      color="primary"
+                    >
+                      <Avatar>
+                        <Quiz />
+                      </Avatar>
+                    </Badge>
                   </ListItemAvatar>
-                  <ListItemText primary={obj.name} secondary={obj.createdAt} />
+                  <ListItemText
+                    primary={obj.name}
+                    secondary={obj.description}
+                  />
+                  <Box className="float-right">
+                    <Chip
+                      icon={<ThumbUpIcon />}
+                      label={obj.success}
+                      color="success"
+                      sx={{ ml: 2, mt: 2 }}
+                      title="Número de aciertos"
+                    />
+                    <Chip
+                      icon={<ThumbDownIcon />}
+                      label={obj.fail}
+                      color="error"
+                      sx={{ ml: 2, mt: 2 }}
+                      title="Número de desaciertos"
+                    />
+                  </Box>
                 </ListItem>
               ))}
             </List>

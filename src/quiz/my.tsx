@@ -29,6 +29,10 @@ import Alert from '@mui/material/Alert';
 import DialogContentText from '@mui/material/DialogContentText';
 import { clearQuiz } from './store';
 import { useNavigate } from 'react-router-dom';
+import Badge from '@mui/material/Badge';
+import Chip from '@mui/material/Chip';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 export default function MyQuizes() {
   const [openEditor, setOpenEditor] = useState<boolean>(false);
@@ -229,7 +233,7 @@ export default function MyQuizes() {
                   divider
                   title={obj.description}
                   secondaryAction={
-                    <div>
+                    <Box>
                       <IconButton
                         edge="end"
                         color="warning"
@@ -257,15 +261,41 @@ export default function MyQuizes() {
                       >
                         <DeleteIcon />
                       </IconButton>
-                    </div>
+                    </Box>
                   }
                 >
                   <ListItemAvatar>
-                    <Avatar>
-                      <Quiz />
-                    </Avatar>
+                    <Badge
+                      badgeContent={obj.count}
+                      title="Cantidad de preguntas"
+                      color="primary"
+                    >
+                      <Avatar>
+                        <Quiz />
+                      </Avatar>
+                    </Badge>
                   </ListItemAvatar>
-                  <ListItemText primary={obj.name} secondary={obj.createdAt} />
+                  <ListItemText
+                    primary={obj.name}
+                    secondary={
+                      <Box>
+                        <Chip
+                          icon={<ThumbUpIcon />}
+                          label={obj.success}
+                          color="success"
+                          sx={{ ml: 2, mt: 2 }}
+                          title="Número de aciertos"
+                        />
+                        <Chip
+                          icon={<ThumbDownIcon />}
+                          label={obj.fail}
+                          color="error"
+                          sx={{ ml: 2, mt: 2 }}
+                          title="Número de desaciertos"
+                        />
+                      </Box>
+                    }
+                  />
                 </ListItem>
               ))}
             </List>
